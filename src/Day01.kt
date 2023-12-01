@@ -1,17 +1,29 @@
 fun main() {
-    fun part1(input: List<String>): Int {
-        return input.size
+    val trebuchetCalibration = Day01Part1.calculateTrebuchetCalibration()
+    println("Part 1 - Trebuchet Calculation: $trebuchetCalibration")
+}
+
+private object Day01Part1 {
+    fun calculateTrebuchetCalibration(): Int {
+        val input = readInput("Day01-input")
+        return input.mapNotNull { garbledValue ->
+            if (garbledValue.isNotEmpty() && garbledValue != "\n") {
+                parseGarbledValue(garbledValue)
+            } else {
+                null
+            }
+        }.sum()
     }
 
-    fun part2(input: List<String>): Int {
-        return input.size
+    fun parseGarbledValue(garbledValue: String): Int {
+        val parsedIntString = garbledValue.replace(Regexes.NonDigit, "")
+        return when (parsedIntString.length) {
+            // If there's only one digit, duplicate it (since first and last are equal).
+            1 -> "$parsedIntString$parsedIntString".toInt()
+
+            else -> {
+                "${parsedIntString.first()}${parsedIntString.last()}".toInt()
+            }
+        }
     }
-
-    // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day01_test")
-    check(part1(testInput) == 1)
-
-    val input = readInput("Day01")
-    part1(input).println()
-    part2(input).println()
 }
