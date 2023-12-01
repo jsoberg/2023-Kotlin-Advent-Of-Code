@@ -1,3 +1,4 @@
+// https://adventofcode.com/2023/day/1
 fun main() {
     val input = readInput("Day01-input")
 
@@ -76,7 +77,7 @@ private object Day01Part2 {
                     )
             )
         }
-        
+
         return when {
             occurrences.isEmpty() -> 0
             // Edge case where first and last digit are the same.
