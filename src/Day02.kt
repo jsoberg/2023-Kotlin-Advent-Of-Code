@@ -3,6 +3,9 @@ fun main() {
     val input = readInput("Day02-input")
     val part1NumPossibleGamesIdSum = Day02Part1.calculatePossibleGamesIdSum(input)
     println("Part 1 - Possible Games ID Sum: $part1NumPossibleGamesIdSum")
+
+    val part2MinimumBagCubePowerSum = Day02Part2.calculateMinimumBagCubePower(input)
+    println("Part 2 - Minimum Bag Power Sum: $part2MinimumBagCubePowerSum")
 }
 
 private object Day02Part1 {
@@ -23,6 +26,19 @@ private object Day02Part1 {
             }
         }
         return runningIdSum
+    }
+}
+
+private object Day02Part2 {
+
+    fun calculateMinimumBagCubePower(input: List<String>): Int {
+        val parser = GameParser()
+        var runningPowerSum = 0
+        input.forEach { line ->
+            val game = parser.parseGameFromLine(line)
+            runningPowerSum += game.calculateMinimumRequiredBagPower()
+        }
+        return runningPowerSum
     }
 }
 
@@ -70,9 +86,9 @@ data class Game(
         val bagPulls: List<BagPull>,
 ) {
 
-    fun isPossible(bag: HashMap<Cube.Color, Int>): Boolean {
-        bagPulls.forEach { map ->
-            map.forEach { (color, numCubes) ->
+    fun isPossible(bag: Map<Cube.Color, Int>): Boolean {
+        bagPulls.forEach { pull ->
+            pull.forEach { (color, numCubes) ->
                 val numCubesInBag = bag[color] ?: 0
                 if (numCubesInBag < numCubes) {
                     return false
@@ -80,6 +96,33 @@ data class Game(
             }
         }
         return true
+    }
+
+    fun calculateMinimumRequiredBagPower(): Int {
+        val bag = findMinimumRequiredBag()
+        var power = 1
+        bag.forEach { (_, minNumCubes) ->
+            power *= minNumCubes
+        }
+        return power
+    }
+
+    private fun findMinimumRequiredBag(): Map<Cube.Color, Int> {
+        val bag = hashMapOf<Cube.Color, Int>().apply {
+            Cube.Color.values().forEach { color ->
+                put(color, 0)
+            }
+        }
+
+        bagPulls.forEach { pull ->
+            pull.forEach { (color, numCubes) ->
+                val minimumCubesInBag = bag[color] ?: 0
+                if (numCubes > minimumCubesInBag) {
+                    bag[color] = numCubes
+                }
+            }
+        }
+        return bag
     }
 
     data class BagPull(
