@@ -5,7 +5,6 @@ import kotlin.math.min
 fun main() {
     val input = readInput("Day03-input")
 
-    // WIP
     val part1PartNumberSum = Day03Part1.calculateEngineSchematicSum(input)
     println("Part 1 - Valid Engine Part Number Sum: $part1PartNumberSum")
 }
@@ -20,7 +19,7 @@ private object Day03Part1 {
             numbers.forEach { numberString ->
                 val numberIndex =
                     input[index].indexOf(numberString, startIndex = numberStartCheckIndex)
-                numberStartCheckIndex = numberIndex + 1
+                numberStartCheckIndex = numberIndex + numberString.length
                 val isValid = isValidPartNumber(
                     numberString = numberString,
                     numberStartIndex = numberIndex,
