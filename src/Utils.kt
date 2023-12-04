@@ -22,4 +22,5 @@ fun Any?.println() = println(this)
 
 object Regexes {
     val NonDigit = "[^0-9]".toRegex()
+    val Number = "[0-9]+".toRegex()
 }
