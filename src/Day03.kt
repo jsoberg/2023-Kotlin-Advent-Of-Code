@@ -1,3 +1,4 @@
+import StringParsing.findNumbers
 import kotlin.math.max
 import kotlin.math.min
 
@@ -14,7 +15,7 @@ private object Day03Part1 {
     fun calculateEngineSchematicSum(input: List<String>): Int {
         var runningPartNumberSum = 0
         input.forEachIndexed { index, line ->
-            val numbers = findNumbersInLine(line)
+            val numbers = line.findNumbers()
             var numberStartCheckIndex = 0
             numbers.forEach { numberString ->
                 val numberIndex =
@@ -34,12 +35,6 @@ private object Day03Part1 {
 
         return runningPartNumberSum
     }
-
-    private fun findNumbersInLine(line: String): List<String> =
-        Regexes.Number
-            .findAll(line)
-            .map(MatchResult::value)
-            .toList()
 
     private fun isValidPartNumber(
         numberString: String,
