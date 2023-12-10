@@ -12,8 +12,8 @@ fun readInput(name: String) = Path("input/$name.txt").readLines()
  * Converts string to md5 hash.
  */
 fun String.md5() = BigInteger(1, MessageDigest.getInstance("MD5").digest(toByteArray()))
-    .toString(16)
-    .padStart(32, '0')
+        .toString(16)
+        .padStart(32, '0')
 
 /**
  * The cleaner shorthand for printing output.
@@ -27,12 +27,20 @@ object Regexes {
 
 object StringParsing {
     fun String.findNumbers(): List<String> =
-        Regexes.Number
-            .findAll(this)
-            .map(MatchResult::value)
-            .toList()
+            Regexes.Number
+                    .findAll(this)
+                    .map(MatchResult::value)
+                    .toList()
 
     fun String.parseNumber(): Int =
-        replace(Regexes.NonDigit, "")
-            .toInt()
+            replace(Regexes.NonDigit, "")
+                    .toInt()
+}
+
+object Matrices {
+    fun Array<IntArray>.printMatrix() {
+        forEach { row ->
+            row.joinToString(",").println()
+        }
+    }
 }
