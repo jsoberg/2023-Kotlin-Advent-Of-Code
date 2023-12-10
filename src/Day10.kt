@@ -1,4 +1,4 @@
-// https://adventofcode.com/2023/day/6
+// https://adventofcode.com/2023/day/10
 fun main() {
     val input = readInput("Day10-test")
     val part1StepsToFarthestPosition = Day10Part1.calculateStepsToFarthestPosition(input)
